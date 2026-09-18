@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebJax Inc. | Keep the web simple.</title>
+  <meta name="description" content="WebJax Inc. builds clean, fast, easy-to-understand websites for businesses across North Carolina. No jargon, no headaches. Keep the web simple." />
+  <meta name="theme-color" content="#0b0f1f" />
+
+  <!-- Social preview -->
+  <meta property="og:title" content="WebJax Inc. | Keep the web simple." />
+  <meta property="og:description" content="Clean, fast websites for North Carolina businesses. Starting at $450." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f8cff'/%3E%3Cstop offset='1' stop-color='%239b6bff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230b0f1f'/%3E%3Cpath d='M12 18l8 28 12-20 12 20 8-28' fill='none' stroke='url(%23g)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+       ============================================================ */
+    :root {
+      --bg: #0b0f1f;
+      --bg-2: #0f1530;
+      --bg-3: #141b3d;
+      --surface: rgba(255, 255, 255, 0.04);
+      --surface-2: rgba(255, 255, 255, 0.07);
+      --border: rgba(154, 168, 255, 0.16);
+      --border-strong: rgba(154, 168, 255, 0.32);
+
+      --text: #e9ecff;
+      --text-2: #b4bbe0;
+      --text-3: #7f88b8;
+
+      --blue: #4f8cff;
+      --blue-soft: #7fb0ff;
+      --purple: #9b6bff;
+      --purple-soft: #c0a3ff;
+      --accent-grad: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow: 0 20px 60px rgba(4, 8, 30, 0.55);
+      --glow: 0 0 0 1px rgba(127, 176, 255, 0.18), 0 12px 40px rgba(79, 140, 255, 0.18);
+
+      --max: 1140px;
+      --nav-h: 72px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); }
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4 {
+      font-family: "Space Grotesk", "Inter", sans-serif;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin: 0 0 0.5em;
+    }
+    h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 700; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; }
+    h3 { font-size: 1.25rem; font-weight: 600; }
+    p { margin: 0 0 1em; }
+    a { color: var(--blue-soft); text-decoration: none; }
+    a:hover { color: #fff; }
+    img { max-width: 100%; display: block; }
+    :focus-visible { outline: 2px solid var(--blue-soft); outline-offset: 3px; border-radius: 6px; }
+
+    .container { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .grad-text {
+      background: var(--accent-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--blue-soft); margin-bottom: 14px;
+    }
+    .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--accent-grad); border-radius: 2px; }
+    .lead { font-size: 1.15rem; color: var(--text-2); max-width: 640px; }
+    .muted { color: var(--text-3); }
+
+    /* ============================================================
+       BACKGROUND (subtle grid + soft glows: the "neo" without the noise)
+       ============================================================ */
+    .bg {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(79, 140, 255, 0.22), transparent 60%),
+        radial-gradient(800px 500px at 95% 10%, rgba(155, 107, 255, 0.20), transparent 60%),
+        radial-gradient(700px 500px at 50% 110%, rgba(79, 140, 255, 0.12), transparent 60%),
+        var(--bg);
+    }
+    .bg::after {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(154, 168, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(154, 168, 255, 0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
+    }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 0.98rem;
+      border: 1px solid transparent; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      font-family: inherit; line-height: 1; white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--accent-grad); color: #fff; box-shadow: 0 10px 30px rgba(107, 120, 255, 0.35); }
+    .btn-primary:hover { box-shadow: 0 14px 38px rgba(107, 120, 255, 0.5); color: #fff; }
+    .btn-ghost { background: var(--surface); color: var(--text); border-color: var(--border-strong); }
+    .btn-ghost:hover { background: var(--surface-2); border-color: var(--blue-soft); color: #fff; }
+    .btn-sm { padding: 10px 18px; font-size: 0.9rem; }
+    .btn svg { width: 18px; height: 18px; }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    .nav {
+      position: sticky; top: 0; z-index: 50; height: var(--nav-h);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      background: rgba(11, 15, 31, 0.72); border-bottom: 1px solid var(--border);
+    }
+    .nav .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--text); font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; }
+    .brand-mark { width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: var(--accent-grad); box-shadow: 0 6px 18px rgba(107, 120, 255, 0.45); }
+    .brand-mark svg { width: 22px; height: 22px; }
+    .brand small { display: block; font-family: "Inter", sans-serif; font-weight: 500; font-size: 0.68rem; color: var(--text-3); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; margin-top: 3px; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { display: block; padding: 10px 14px; border-radius: 999px; color: var(--text-2); font-weight: 500; font-size: 0.95rem; transition: background .18s, color .18s; }
+    .nav-links a:hover, .nav-links a.active { background: var(--surface-2); color: #fff; }
+    .nav-links .mobile-cta { display: none; }
+    .nav-cta { display: flex; align-items: center; gap: 10px; }
+    .nav-toggle { display: none; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); cursor: pointer; place-items: center; }
+    .nav-toggle svg { width: 22px; height: 22px; }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        position: fixed; top: var(--nav-h); left: 0; right: 0;
+        flex-direction: column; align-items: stretch; gap: 6px; padding: 16px 20px 22px;
+        background: var(--bg); border-bottom: 1px solid var(--border-strong); box-shadow: 0 24px 40px rgba(4, 8, 30, 0.6);
+        transform: translateY(-12px); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+      }
+      .nav-links.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      .nav-links a { padding: 14px 16px; font-size: 1.05rem; }
+      .nav-links .mobile-cta { display: block; margin-top: 10px; }
+      .nav-links .mobile-cta a { display: flex; justify-content: center; background: var(--accent-grad); color: #fff; border-radius: 999px; font-weight: 600; }
+      .nav-cta .btn { display: none; }
+      .nav-toggle { display: grid; }
+    }
+
+    /* ============================================================
+       SECTIONS
+       ============================================================ */
+    section { padding: 96px 0; }
+    .section-head { max-width: 680px; margin-bottom: 48px; }
+    .section-head.center { margin-inline: auto; text-align: center; }
+    .section-head.center .eyebrow::before { display: none; }
+    .section-head.center .eyebrow::after { display: none; }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border-strong), transparent); }
+
+    /* ---------- HERO ---------- */
+    .hero { padding: 96px 0 72px; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center; }
+    .hero-pill { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border-strong); font-size: 0.85rem; color: var(--text-2); margin-bottom: 26px; }
+    .hero-pill .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--accent-grad); display: grid; place-items: center; }
+    .hero-pill .dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px #fff; }
+    .hero h1 { margin-bottom: 20px; }
+    .hero .lead { margin-bottom: 32px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 40px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 28px; }
+    .hero-stats div strong { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; font-weight: 700; }
+    .hero-stats div span { font-size: 0.85rem; color: var(--text-3); }
+
+    /* The floating "browser window" visual in the hero */
+    .hero-visual { position: relative; }
+    .window {
+      border-radius: 20px; border: 1px solid var(--border-strong); background: linear-gradient(180deg, rgba(20, 27, 61, 0.9), rgba(15, 21, 48, 0.9));
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.06); overflow: hidden;
+      animation: floaty 7s ease-in-out infinite;
+    }
+    @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .window-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.03); }
+    .window-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--text-3); opacity: .5; }
+    .window-bar i:nth-child(1) { background: #ff6b8b; opacity: 1; }
+    .window-bar i:nth-child(2) { background: #ffd166; opacity: 1; }
+    .window-bar i:nth-child(3) { background: #6ee7b7; opacity: 1; }
+    .window-bar .url { margin-left: 8px; flex: 1; height: 24px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); font-size: 0.72rem; color: var(--text-3); display: flex; align-items: center; padding: 0 10px; }
+    .window-body { padding: 22px; display: grid; gap: 14px; }
+    .skel { border-radius: 10px; background: rgba(255,255,255,0.06); }
+    .skel.hero-line { height: 26px; width: 70%; background: var(--accent-grad); opacity: .9; }
+    .skel.line { height: 12px; }
+    .skel.line.w60 { width: 60%; } .skel.line.w85 { width: 85%; } .skel.line.w45 { width: 45%; }
+    .skel-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .skel.card { height: 84px; border: 1px solid var(--border); }
+    .skel.btn { height: 34px; width: 120px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border-strong); }
+    .float-chip {
+      position: absolute; padding: 12px 16px; border-radius: 14px; background: rgba(15, 21, 48, 0.9); border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow); font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(10px);
+    }
+    .float-chip .ic { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: var(--accent-grad); }
+    .float-chip .ic svg { width: 16px; height: 16px; }
+    .chip-1 { top: -18px; left: -28px; animation: floaty 6s ease-in-out infinite 0.6s; }
+    .chip-2 { bottom: -18px; right: -20px; animation: floaty 8s ease-in-out infinite 1.2s; }
+
+    /* ---------- QUICK MENU (the "press a button, go somewhere" grid) ---------- */
+    .quick { padding: 0 0 80px; }
+    .quick-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .tile {
+      position: relative; display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: var(--radius);
+      background: var(--surface); border: 1px solid var(--border); color: var(--text); overflow: hidden;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .tile::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(79,140,255,0.12), rgba(155,107,255,0.12)); opacity: 0; transition: opacity .2s; }
+    .tile:hover { transform: translateY(-4px); border-color: var(--border-strong); box-shadow: var(--glow); color: var(--text); }
+    .tile:hover::before { opacity: 1; }
+    .tile > * { position: relative; }
+    .tile .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-grad); box-shadow: 0 8px 20px rgba(107,120,255,0.35); }
+    .tile .ic svg { width: 22px; height: 22px; }
+    .tile h3 { margin: 0; font-size: 1.1rem; }
+    .tile p { margin: 0; color: var(--text-3); font-size: 0.92rem; }
+    .tile .go { margin-top: auto; font-size: 0.85rem; font-weight: 600; color: var(--blue-soft); display: flex; align-items: center; gap: 6px; }
+    .tile .go svg { width: 16px; height: 16px; transition: transform .2s; }
+    .tile:hover .go svg { transform: translateX(4px); }
+
+    /* ---------- ABOUT ---------- */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .about-copy p { color: var(--text-2); font-size: 1.05rem; }
+    .motto {
+      margin: 28px 0 0; padding: 26px 28px; border-radius: var(--radius); border: 1px solid var(--border-strong);
+      background: linear-gradient(135deg, rgba(79,140,255,0.10), rgba(155,107,255,0.10)); position: relative; overflow: hidden;
+    }
+    .motto::before { content: "“"; position: absolute; top: -28px; right: 16px; font-family: "Space Grotesk", sans-serif; font-size: 8rem; line-height: 1; color: rgba(154,168,255,0.12); }
+    .motto strong { font-family: "Space Grotesk", sans-serif; font-size: 1.6rem; font-weight: 700; display: block; margin-bottom: 4px; }
+    .motto span { color: var(--text-3); font-size: 0.9rem; }
+    .values { display: grid; gap: 14px; }
+    .value { display: flex; gap: 16px; padding: 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
+    .value .ic { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--blue-soft); }
+    .value .ic svg { width: 20px; height: 20px; }
+    .value h3 { font-size: 1.05rem; margin-bottom: 4px; }
+    .value p { margin: 0; color: var(--text-3); font-size: 0.95rem; }
+    .location-badge { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border-strong); font-size: 0.9rem; color: var(--text-2); margin-top: 22px; }
+    .location-badge svg { width: 18px; height: 18px; color: var(--purple-soft); }
+
+    /* ---------- SERVICES ---------- */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .service { padding: 28px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); transition: border-color .2s, transform .2s; }
+    .service:hover { border-color: var(--border-strong); transform: translateY(-3px); }
+    .service .ic { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--blue-soft); margin-bottom: 18px; }
+    .service .ic svg { width: 22px; height: 22px; }
+    .service p { color: var(--text-3); font-size: 0.95rem; margin: 0; }
+
+    /* ---------- PROCESS ---------- */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: step; }
+    .step { position: relative; padding: 26px 24px 24px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
+    .step .num { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.1em; color: var(--purple-soft); margin-bottom: 12px; display: block; }
+    .step h3 { font-size: 1.05rem; }
+    .step p { margin: 0; color: var(--text-3); font-size: 0.93rem; }
+
+    /* ---------- DEMOS ---------- */
+    .demos-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 20px; }
+    .demo {
+      position: relative; border-radius: 20px; border: 1px solid var(--border-strong); overflow: hidden;
+      background: linear-gradient(180deg, rgba(20, 27, 61, 0.9), rgba(15, 21, 48, 0.9)); box-shadow: var(--shadow); display: flex; flex-direction: column;
+    }
+    .demo-frame { position: relative; aspect-ratio: 16 / 10; background: #0b0f1f; overflow: hidden; }
+    .demo-frame iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+    .demo-frame .overlay {
+      position: absolute; inset: 0; display: grid; place-items: center; background: rgba(11,15,31,0.35);
+      opacity: 0; transition: opacity .2s;
+    }
+    .demo:hover .demo-frame .overlay { opacity: 1; }
+    .demo-meta { padding: 20px 22px 22px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .demo-meta h3 { margin: 0 0 4px; }
+    .demo-meta p { margin: 0; color: var(--text-3); font-size: 0.92rem; }
+    .tag { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--blue-soft); margin-bottom: 8px; }
+    .demo-soon { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 36px 28px; border-style: dashed; box-shadow: none; background: var(--surface); }
+    .demo-soon .ic { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--purple-soft); margin-bottom: 18px; }
+    .demo-soon .ic svg { width: 26px; height: 26px; }
+    .demo-soon p { color: var(--text-3); font-size: 0.95rem; }
+
+    /* ---------- PRICING ---------- */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+    .plan { position: relative; display: flex; flex-direction: column; padding: 32px 28px; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); transition: transform .2s, border-color .2s; }
+    .plan:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+    .plan.featured { background: linear-gradient(180deg, rgba(79,140,255,0.14), rgba(155,107,255,0.10)); border-color: var(--border-strong); box-shadow: var(--glow); }
+    .plan .badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 6px 14px; border-radius: 999px; background: var(--accent-grad); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; box-shadow: 0 8px 20px rgba(107,120,255,0.4); }
+    .plan h3 { font-size: 1.15rem; margin-bottom: 6px; }
+    .plan .desc { color: var(--text-3); font-size: 0.93rem; min-height: 3em; }
+    .plan .price { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 3rem; letter-spacing: -0.03em; margin: 14px 0 4px; line-height: 1; }
+    .plan .price sup { font-size: 1.3rem; vertical-align: top; top: 0.35em; position: relative; margin-right: 2px; color: var(--text-2); }
+    .plan .price-note { color: var(--text-3); font-size: 0.82rem; margin-bottom: 22px; }
+    .plan ul { list-style: none; margin: 0 0 26px; padding: 0; display: grid; gap: 10px; }
+    .plan li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.95rem; color: var(--text-2); }
+    .plan li svg { flex: none; width: 18px; height: 18px; margin-top: 3px; color: var(--blue-soft); }
+    .plan .btn { margin-top: auto; width: 100%; }
+    .pricing-foot { margin-top: 26px; text-align: center; color: var(--text-3); font-size: 0.92rem; }
+
+    /* ---------- PAYMENTS ---------- */
+    .pay-wrap { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center; padding: 40px; border-radius: 24px; background: var(--surface); border: 1px solid var(--border); }
+    .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .pay { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px 16px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--border-strong); text-align: center; font-weight: 600; font-size: 0.95rem; transition: transform .2s, box-shadow .2s; }
+    .pay:hover { transform: translateY(-3px); box-shadow: var(--glow); }
+    .pay .logo { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; }
+    .pay .logo svg { width: 30px; height: 30px; }
+    .pay small { color: var(--text-3); font-weight: 400; font-size: 0.8rem; }
+    .pay.cashapp .logo { background: #00d632; }
+    .pay.paypal .logo { background: #ffffff; }
+    .pay.apple .logo { background: #000; border: 1px solid #333; }
+
+    /* ---------- FAQ ---------- */
+    .faq { display: grid; gap: 12px; max-width: 800px; margin-inline: auto; }
+    details { border-radius: var(--radius-sm); background: var(--surface); border: 1px solid var(--border); padding: 0 22px; transition: border-color .2s; }
+    details[open] { border-color: var(--border-strong); }
+    summary { cursor: pointer; padding: 18px 0; font-weight: 600; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-family: "Space Grotesk", sans-serif; font-size: 1.4rem; color: var(--blue-soft); transition: transform .2s; line-height: 1; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { padding-bottom: 18px; margin: 0; color: var(--text-2); font-size: 0.97rem; }
+
+    /* ---------- CONTACT ---------- */
+    .contact-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 28px; }
+    .contact-card { padding: 32px; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 22px; }
+    .contact-line { display: flex; gap: 14px; align-items: flex-start; }
+    .contact-line .ic { flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--border-strong); color: var(--blue-soft); }
+    .contact-line .ic svg { width: 20px; height: 20px; }
+    .contact-line strong { display: block; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 2px; }
+    .contact-line a, .contact-line span { font-size: 1.02rem; color: var(--text); font-weight: 500; }
+    .contact-line a:hover { color: var(--blue-soft); }
+    form { padding: 32px; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); display: grid; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    label { display: grid; gap: 7px; font-size: 0.85rem; font-weight: 600; color: var(--text-2); }
+    input, select, textarea {
+      width: 100%; padding: 13px 15px; border-radius: 12px; border: 1px solid var(--border-strong); background: var(--bg-2); color: var(--text);
+      font-family: inherit; font-size: 0.98rem; transition: border-color .18s, box-shadow .18s;
+    }
+    select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%237fb0ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; }
+    select option { background: var(--bg-2); color: var(--text); }
+    input::placeholder, textarea::placeholder { color: var(--text-3); }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue-soft); box-shadow: 0 0 0 4px rgba(79,140,255,0.18); }
+    textarea { min-height: 140px; resize: vertical; }
+    .form-note { font-size: 0.82rem; color: var(--text-3); margin: 0; }
+    .form-status { display: none; padding: 14px 16px; border-radius: 12px; font-size: 0.95rem; }
+    .form-status.ok { display: block; background: rgba(110, 231, 183, 0.12); border: 1px solid rgba(110, 231, 183, 0.4); color: #bff5dd; }
+    .form-status.err { display: block; background: rgba(255, 107, 139, 0.12); border: 1px solid rgba(255, 107, 139, 0.4); color: #ffd0da; }
+    .honey { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
+
+    /* ---------- CTA BAND ---------- */
+    .cta-band { margin: 0 0 96px; }
+    .cta-inner { position: relative; padding: 56px 40px; border-radius: 28px; overflow: hidden; text-align: center; border: 1px solid var(--border-strong); background: linear-gradient(135deg, rgba(79,140,255,0.18), rgba(155,107,255,0.18)); }
+    .cta-inner::before { content: ""; position: absolute; inset: -40%; background: radial-gradient(circle at 30% 30%, rgba(79,140,255,0.25), transparent 40%), radial-gradient(circle at 70% 70%, rgba(155,107,255,0.25), transparent 40%); pointer-events: none; }
+    .cta-inner > * { position: relative; }
+    .cta-inner h2 { margin-bottom: 10px; }
+    .cta-inner p { color: var(--text-2); margin-bottom: 26px; }
+
+    /* ---------- FOOTER ---------- */
+    footer { border-top: 1px solid var(--border); padding: 40px 0; }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; color: var(--text-3); font-size: 0.9rem; }
+    .foot-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+    .foot-links a { color: var(--text-3); }
+    .foot-links a:hover { color: var(--text); }
+
+    /* Back to top */
+    .to-top { position: fixed; right: 20px; bottom: 20px; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--border-strong); background: rgba(15, 21, 48, 0.9); color: var(--text); display: grid; place-items: center; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; backdrop-filter: blur(10px); z-index: 40; }
+    .to-top.show { opacity: 1; pointer-events: auto; }
+    .to-top:hover { transform: translateY(-3px); border-color: var(--blue-soft); }
+    .to-top svg { width: 20px; height: 20px; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .window, .float-chip { animation: none; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1000px) {
+      .quick-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+      .plan.featured { order: -1; }
+    }
+    @media (max-width: 860px) {
+      section { padding: 72px 0; }
+      .hero { padding: 64px 0 48px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+      .hero-visual { margin-inline: 20px; }
+      .about-grid, .demos-grid, .contact-grid, .pay-wrap { grid-template-columns: 1fr; }
+      .pay-wrap { padding: 28px; }
+    }
+    @media (max-width: 560px) {
+      body { font-size: 16px; }
+      .container { width: calc(100% - 32px); }
+      .quick-grid, .steps, .services-grid, .form-row, .pay-grid { grid-template-columns: 1fr; }
+      .hero-actions .btn { width: 100%; }
+      .float-chip { display: none; }
+      .hero-visual { margin-inline: 0; }
+      .cta-inner { padding: 40px 24px; }
+      .contact-card, form { padding: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <header class="nav">
+    <div class="container">
+      <a href="#top" class="brand" aria-label="WebJax Inc. home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18l8 28 12-20 12 20 8-28"/></svg>
+        </span>
+        <span>WebJax<small>Inc.</small></span>
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#demos">Demos</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#payments">Payments</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li class="mobile-cta"><a href="#contact">Start a project</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-primary btn-sm">Start a project</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="hero-pill">
+            <span class="dot" aria-hidden="true"></span>
+            Now booking new projects in North Carolina
+          </div>
+          <h1>Websites that just <span class="grad-text">make sense.</span></h1>
+          <p class="lead">
+            WebJax Inc. builds clean, fast, easy-to-understand websites for small businesses.
+            No jargon. No runaround. Just a site that works and looks great doing it.
+          </p>
+          <div class="hero-actions">
+            <a href="#pricing" class="btn btn-primary">
+              See pricing
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a href="#demos" class="btn btn-ghost">View a live demo</a>
+          </div>
+          <div class="hero-stats">
+            <div><strong>$450+</strong><span>Sites starting at</span></div>
+            <div><strong>NC</strong><span>Proudly local</span></div>
+            <div><strong>1–2 wks</strong><span>Typical turnaround</span></div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="float-chip chip-1">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            Mobile ready
+          </div>
+          <div class="window">
+            <div class="window-bar"><i></i><i></i><i></i><span class="url">yourbusiness.com</span></div>
+            <div class="window-body">
+              <div class="skel hero-line"></div>
+              <div class="skel line w85"></div>
+              <div class="skel line w60"></div>
+              <div class="skel btn"></div>
+              <div class="skel-row"><div class="skel card"></div><div class="skel card"></div><div class="skel card"></div></div>
+              <div class="skel line w45"></div>
+            </div>
+          </div>
+          <div class="float-chip chip-2">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+            Loads fast
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         QUICK MENU  (jump anywhere from here)
+         ============================================================ -->
+    <section class="quick" aria-label="Quick menu">
+      <div class="container">
+        <div class="quick-grid">
+          <a href="#about" class="tile reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+            <h3>Who we are</h3>
+            <p>Our approach, our motto, and why we keep things simple.</p>
+            <span class="go">About us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a href="#demos" class="tile reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></span>
+            <h3>See our work</h3>
+            <p>Click through a real, live demo site we built.</p>
+            <span class="go">Demos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a href="#pricing" class="tile reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
+            <h3>Pricing</h3>
+            <p>Three clear packages. No hidden fees, no surprises.</p>
+            <span class="go">View plans <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a href="#contact" class="tile reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3z"/><path d="M8 9h8M8 12h5"/></svg></span>
+            <h3>Get in touch</h3>
+            <p>Send us a message and we'll reply within a day.</p>
+            <span class="go">Contact <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         ABOUT / BIO
+         ============================================================ -->
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-copy reveal">
+          <span class="eyebrow">About WebJax</span>
+          <h2>We don't make things difficult.</h2>
+          <p>
+            Most web agencies bury you in tech talk, endless meetings, and invoices you need a
+            decoder ring to read. We do the opposite. We cut out the jargon, keep the process short,
+            and build a site you actually understand and can be proud to hand out.
+          </p>
+          <p>
+            You tell us what your business does and who you want to reach. We handle the rest:
+            design, build, launch, and making sure it looks sharp on every phone and laptop.
+            When you have a question, you get a straight answer in plain English.
+          </p>
+          <div class="motto">
+            <strong class="grad-text">Keep the web simple.</strong>
+            <span>Our motto, and the rule behind every site we ship.</span>
+          </div>
+          <div class="location-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Proudly serving businesses across North Carolina
+          </div>
+        </div>
+
+        <div class="values reveal">
+          <div class="value">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+            <div><h3>Plain-English everything</h3><p>Proposals, updates, and invoices you can read in one pass. No acronyms required.</p></div>
+          </div>
+          <div class="value">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <div><h3>Fast turnaround</h3><p>Most sites are live within one to two weeks of getting your content.</p></div>
+          </div>
+          <div class="value">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span>
+            <div><h3>Built for phones first</h3><p>Most of your customers are on a phone. Every site we build looks right there before anywhere else.</p></div>
+          </div>
+          <div class="value">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <div><h3>Clear, flat pricing</h3><p>You'll know the price before we start. No surprise add-ons at the end.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         SERVICES
+         ============================================================ -->
+    <section id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">What we do</span>
+          <h2>Everything your business needs online. Nothing it doesn't.</h2>
+          <p class="lead">Pick what you need. We'll tell you honestly what you don't.</p>
+        </div>
+        <div class="services-grid">
+          <div class="service reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></span>
+            <h3>Website design &amp; build</h3>
+            <p>A custom site designed around your business, built clean, and launched on your own domain.</p>
+          </div>
+          <div class="service reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.2-8.6"/><path d="M21 3v6h-6"/></svg></span>
+            <h3>Redesigns &amp; refreshes</h3>
+            <p>Already have a site that feels dated or clunky? We'll modernize it without starting from zero.</p>
+          </div>
+          <div class="service reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span>
+            <h3>Mobile-first layouts</h3>
+            <p>Every page is built to look right on a phone first, then scaled up for tablets and desktops.</p>
+          </div>
+          <div class="service reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+            <h3>Google-ready setup</h3>
+            <p>Titles, descriptions, and structure done right so people in your area can actually find you.</p>
+          </div>
+          <div class="service reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3z"/><path d="M8 9h8M8 12h5"/></svg></span>
+            <h3>Contact forms &amp; booking</h3>
+            <p>Let customers message you, request quotes, or book a time straight from your site.</p>
+          </div>
+          <div class="service reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/></svg></span>
+            <h3>Hosting &amp; launch help</h3>
+            <p>We get your domain connected, your site online, and hand you the keys with a quick walkthrough.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROCESS
+         ============================================================ -->
+    <section id="process" style="padding-top: 0;">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">How it works</span>
+          <h2>Four steps. That's it.</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal"><span class="num">STEP 01</span><h3>Say hello</h3><p>Send a message or an email. Tell us about your business and what you want the site to do.</p></div>
+          <div class="step reveal"><span class="num">STEP 02</span><h3>Pick a package</h3><p>We'll recommend Basic, Premium, or Complex based on what you actually need. Not what costs more.</p></div>
+          <div class="step reveal"><span class="num">STEP 03</span><h3>We build it</h3><p>You send over your logo, photos, and text. We design and build. You review and request changes.</p></div>
+          <div class="step reveal"><span class="num">STEP 04</span><h3>Go live</h3><p>We launch your site on your domain, show you how it works, and stay reachable if you need us.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         DEMOS
+         ============================================================ -->
+    <section id="demos">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Live demos</span>
+          <h2>Don't take our word for it. Click around.</h2>
+          <p class="lead">These are real, working sites. Scroll the preview or open it full-screen.</p>
+        </div>
+
+        <div class="demos-grid">
+          <!-- Demo 1: Rebecca's Bakery -->
+          <article class="demo reveal">
+            <div class="demo-frame">
+              <iframe src="https://rebeccas-bakery.vercel.app" title="Rebecca's Bakery demo site" loading="lazy" referrerpolicy="no-referrer"></iframe>
+              <a class="overlay" href="https://rebeccas-bakery.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="Open Rebecca's Bakery in a new tab">
+                <span class="btn btn-primary">
+                  Open full site
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+                </span>
+              </a>
+            </div>
+            <div class="demo-meta">
+              <div>
+                <span class="tag">Small business · Bakery</span>
+                <h3>Rebecca's Bakery</h3>
+                <p>A warm, simple storefront site with a menu, hours, and an easy way to get in touch.</p>
+              </div>
+              <a href="https://rebeccas-bakery.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+                Visit demo
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+              </a>
+            </div>
+          </article>
+
+          <!-- Placeholder for the next demo -->
+          <article class="demo demo-soon reveal">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span>
+            <h3>Your site could be next</h3>
+            <p>More demos are on the way. Want to see a mockup for your own business before you commit? Just ask.</p>
+            <a href="#contact" class="btn btn-ghost btn-sm">Request a mockup</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         PRICING
+         ============================================================ -->
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Pricing</span>
+          <h2>Simple packages. Flat prices.</h2>
+          <p class="lead" style="margin-inline:auto;">Every package includes design, build, mobile layout, and launch. Pick the size that fits.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- Basic -->
+          <div class="plan reveal">
+            <h3>Basic Site</h3>
+            <p class="desc">Perfect for getting your business online with a clean, professional presence.</p>
+            <div class="price"><sup>$</sup>450</div>
+            <p class="price-note">One-time payment</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>1 to 3 pages (Home, About, Contact)</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom design that fits your brand</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Looks great on phones and desktop</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Contact form that emails you</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Domain and launch setup</li>
+            </ul>
+            <a href="#contact" class="btn btn-ghost" data-plan="Basic Site ($450)">Choose Basic</a>
+          </div>
+
+          <!-- Premium -->
+          <div class="plan featured reveal">
+            <span class="badge">Most popular</span>
+            <h3>Premium Site</h3>
+            <p class="desc">More pages, more polish, and the extras most growing businesses ask for.</p>
+            <div class="price"><sup>$</sup>750</div>
+            <p class="price-note">One-time payment</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Basic</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Up to 6 pages (Services, Gallery, FAQ, and more)</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Photo gallery or menu section</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Google-ready titles and descriptions</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Social media and Google Maps links</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Two rounds of revisions</li>
+            </ul>
+            <a href="#contact" class="btn btn-primary" data-plan="Premium Site ($750)">Choose Premium</a>
+          </div>
+
+          <!-- Complex -->
+          <div class="plan reveal">
+            <h3>Complex Site</h3>
+            <p class="desc">Feature-packed and built to do real work: bookings, ordering, members, and more.</p>
+            <div class="price"><sup>$</sup>1,200</div>
+            <p class="price-note">One-time payment</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Premium</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unlimited pages</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Online booking, ordering, or payments</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom features built for your workflow</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Animations and interactive sections</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>30 days of post-launch support</li>
+            </ul>
+            <a href="#contact" class="btn btn-ghost" data-plan="Complex Site ($1,200)">Choose Complex</a>
+          </div>
+        </div>
+
+        <p class="pricing-foot">Not sure which one fits? <a href="#contact">Send us a message</a> and we'll point you to the right package. No pressure.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PAYMENTS
+         ============================================================ -->
+    <section id="payments" style="padding-top: 0;">
+      <div class="container">
+        <div class="pay-wrap reveal">
+          <div>
+            <span class="eyebrow">Payments</span>
+            <h2>Pay the way you already do.</h2>
+            <p class="muted" style="margin:0;">We keep payment as simple as the rest of the process. Half up front to get started, the rest when your site goes live. We accept:</p>
+          </div>
+          <div class="pay-grid">
+            <div class="pay cashapp">
+              <span class="logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M15.2 8.9c-.8-.7-2-1.1-3.1-1.1-1.3 0-2.1.5-2.1 1.3 0 .8.9 1.1 2.4 1.6 2.4.7 4 1.6 4 3.8 0 2.2-1.6 3.6-4.2 3.9l-.3 1.6H9.7l.3-1.6c-1.4-.2-2.6-.8-3.4-1.6l1.4-1.5c1 .8 2.2 1.3 3.5 1.3 1.4 0 2.3-.6 2.3-1.5 0-.8-.8-1.2-2.4-1.7-2.2-.7-3.9-1.5-3.9-3.7 0-2 1.5-3.4 4-3.7l.3-1.6h2.2l-.3 1.6c1.1.2 2.1.7 2.9 1.4l-1.4 1.5z" fill="#fff"/></svg>
+              </span>
+              Cash App
+              <small>Fast and easy</small>
+            </div>
+            <div class="pay paypal">
+              <span class="logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M7.2 20.5H4.6a.5.5 0 0 1-.5-.6L6.6 4.2a.9.9 0 0 1 .9-.7h5.8c2.3 0 4 .5 4.9 1.6.9 1 1.1 2.3.8 3.9-.6 3.4-2.9 5.2-6.5 5.2H10a.9.9 0 0 0-.9.7l-1 5.6a.9.9 0 0 1-.9.7z" fill="#253B80"/><path d="M19.1 8.2c.2.3.3.7.3 1.1-.1 3.6-2.4 6-6.4 6h-1.8a.9.9 0 0 0-.9.7l-.9 5.4a.5.5 0 0 0 .5.6h2.3a.8.8 0 0 0 .8-.6l.8-4.6a.8.8 0 0 1 .8-.6h.9c3.2 0 5.3-1.6 5.8-4.7.3-1.6 0-2.6-.8-3.3h-.4z" fill="#179BD7"/></svg>
+              </span>
+              PayPal
+              <small>Card or balance</small>
+            </div>
+            <div class="pay apple">
+              <span class="logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#fff"><path d="M16.4 12.6c0-2.1 1.7-3.1 1.8-3.2-1-1.4-2.5-1.6-3-1.7-1.3-.1-2.5.8-3.2.8-.7 0-1.7-.7-2.8-.7-1.4 0-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.7 2.2 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7c1.2 0 1.9-1.1 2.6-2.1.8-1.2 1.2-2.3 1.2-2.4-.1 0-2.5-.9-2.5-3.6zM14.3 6.3c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.6.6-1 1.6-.9 2.6 1 .1 1.9-.5 2.5-1.2z"/></svg>
+              </span>
+              Apple Pay
+              <small>Tap and done</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section id="faq">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Questions</span>
+          <h2>Quick answers.</h2>
+        </div>
+        <div class="faq reveal">
+          <details>
+            <summary>How long does it take to build my site?</summary>
+            <p>Basic sites usually go live within a week of receiving your content. Premium sites take one to two weeks. Complex sites depend on the features, but we'll give you a clear timeline before we start.</p>
+          </details>
+          <details>
+            <summary>What do I need to give you?</summary>
+            <p>Your logo (if you have one), a few photos, and a rough idea of what you want each page to say. Don't have all of that? No problem. We'll help you fill in the gaps.</p>
+          </details>
+          <details>
+            <summary>Do I own the website?</summary>
+            <p>Yes. Once it's paid for, the site is yours. We'll connect it to your domain and hand over everything you need.</p>
+          </details>
+          <details>
+            <summary>Can I update the site myself later?</summary>
+            <p>Absolutely. We'll walk you through how to make simple changes, or you can reach out and we'll handle updates for a small fee.</p>
+          </details>
+          <details>
+            <summary>Do you only work with businesses in North Carolina?</summary>
+            <p>North Carolina is our home base and where most of our clients are. If you're elsewhere and like what you see, send a message and we'll talk.</p>
+          </details>
+          <details>
+            <summary>What about hosting and domain costs?</summary>
+            <p>Hosting for most sites is free or very low cost through the platforms we use. Your domain name typically runs about $10 to $20 a year. We'll explain it all in plain English before anything is purchased.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ============================================================
+         CONTACT
+         ============================================================ -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Contact</span>
+          <h2>Let's build something simple.</h2>
+          <p class="lead">Tell us a little about your business. We'll reply within one business day.</p>
+        </div>
+
+        <div class="contact-grid">
+          <aside class="contact-card reveal">
+            <div class="contact-line">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <div><strong>Email</strong><a href="mailto:webjaxmedia@gmail.com">webjaxmedia@gmail.com</a></div>
+            </div>
+            <div class="contact-line">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+              <div><strong>Service area</strong><span>North Carolina</span></div>
+            </div>
+            <div class="contact-line">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <div><strong>Response time</strong><span>Within 1 business day</span></div>
+            </div>
+            <div class="contact-line">
+              <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
+              <div><strong>Payments</strong><span>Cash App · PayPal · Apple Pay</span></div>
+            </div>
+            <a href="mailto:webjaxmedia@gmail.com?subject=New%20website%20inquiry" class="btn btn-ghost" style="margin-top:auto;">
+              Email us directly
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </aside>
+
+          <!--
+            The form is wired for Netlify Forms. On Netlify, submissions show up in your
+            dashboard and can be emailed to webjaxmedia@gmail.com (see README).
+            If the site is hosted somewhere else, the JavaScript below falls back to
+            opening the visitor's email app with the message pre-filled.
+          -->
+          <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/" class="reveal" novalidate>
+            <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="subject" value="New website inquiry from WebJax site" />
+            <p class="honey"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+            <div class="form-row">
+              <label>Your name
+                <input type="text" name="name" placeholder="Jordan Smith" required autocomplete="name" />
+              </label>
+              <label>Your email
+                <input type="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>Business name
+                <input type="text" name="business" placeholder="Smith's Auto Repair" autocomplete="organization" />
+              </label>
+              <label>Package you're interested in
+                <select name="package" id="packageSelect">
+                  <option value="Not sure yet">Not sure yet</option>
+                  <option value="Basic Site ($450)">Basic Site ($450)</option>
+                  <option value="Premium Site ($750)">Premium Site ($750)</option>
+                  <option value="Complex Site ($1,200)">Complex Site ($1,200)</option>
+                </select>
+              </label>
+            </div>
+            <label>Tell us about your project
+              <textarea name="message" placeholder="What does your business do? What do you want your website to help you with?" required></textarea>
+            </label>
+
+            <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              Send message
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+            </button>
+            <p class="form-note">Your message goes straight to webjaxmedia@gmail.com. No spam, no newsletters, no sharing your info.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA BAND
+         ============================================================ -->
+    <div class="cta-band">
+      <div class="container">
+        <div class="cta-inner reveal">
+          <span class="eyebrow" style="justify-content:center;">Ready when you are</span>
+          <h2>Keep the web simple.</h2>
+          <p>Clean websites for North Carolina businesses, starting at $450.</p>
+          <a href="#contact" class="btn btn-primary">Start your project</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="container foot">
+      <div>
+        <strong style="color:var(--text);">WebJax Inc.</strong> &nbsp;·&nbsp; Keep the web simple. &nbsp;·&nbsp; North Carolina
+        <br />
+        <span>&copy; <span id="year"></span> WebJax Inc. All rights reserved.</span>
+      </div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#demos">Demos</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#payments">Payments</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a href="mailto:webjaxmedia@gmail.com">webjaxmedia@gmail.com</a>
+      </nav>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script>
+    (function () {
+      // ---------- Footer year ----------
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // ---------- Mobile nav toggle ----------
+      var toggle = document.getElementById('navToggle');
+      var links = document.getElementById('navLinks');
+      toggle.addEventListener('click', function () {
+        var open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      });
+      links.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') {
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // ---------- Highlight the nav link for the section in view ----------
+      var navAnchors = Array.prototype.slice.call(links.querySelectorAll('a[href^="#"]'));
+      var sections = navAnchors.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+      if ('IntersectionObserver' in window) {
+        var spy = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              navAnchors.forEach(function (a) {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+              });
+            }
+          });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+        sections.forEach(function (s) { spy.observe(s); });
+      }
+
+      // ---------- Reveal on scroll ----------
+      var reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+          });
+        }, { threshold: 0.12 });
+        reveals.forEach(function (el) { io.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('in'); });
+      }
+
+      // ---------- Back to top ----------
+      var toTop = document.getElementById('toTop');
+      window.addEventListener('scroll', function () {
+        toTop.classList.toggle('show', window.scrollY > 600);
+      }, { passive: true });
+      toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+      // ---------- Pricing buttons pre-select the package in the form ----------
+      var select = document.getElementById('packageSelect');
+      document.querySelectorAll('[data-plan]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          select.value = btn.getAttribute('data-plan');
+        });
+      });
+
+      // ---------- Contact form ----------
+      var form = document.getElementById('contactForm');
+      var status = document.getElementById('formStatus');
+      var submitBtn = document.getElementById('submitBtn');
+      var TO_EMAIL = 'webjaxmedia@gmail.com';
+
+      function showStatus(kind, text) {
+        status.className = 'form-status ' + kind;
+        status.textContent = text;
+      }
+
+      function openMailFallback(data) {
+        var subject = 'New website inquiry: ' + (data.get('business') || data.get('name'));
+        var body =
+          'Name: ' + data.get('name') + '\n' +
+          'Email: ' + data.get('email') + '\n' +
+          'Business: ' + (data.get('business') || '-') + '\n' +
+          'Package: ' + data.get('package') + '\n\n' +
+          data.get('message');
+        window.location.href = 'mailto:' + TO_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+        var data = new FormData(form);
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+        status.className = 'form-status';
+
+        // Netlify Forms accept a URL-encoded POST to any page on the site.
+        // If we're not on Netlify (local file, another host), this will fail and we
+        // fall back to opening the visitor's email app instead.
+        var isNetlify = /netlify\.app$/.test(location.hostname) || location.protocol === 'https:';
+        if (!isNetlify) { openMailFallback(data); resetBtn(); return; }
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(data).toString()
+        }).then(function (res) {
+          if (!res.ok) throw new Error('Bad response');
+          form.reset();
+          showStatus('ok', 'Thanks! Your message is on its way to ' + TO_EMAIL + '. We\'ll get back to you within one business day.');
+        }).catch(function () {
+          showStatus('err', 'Hmm, that didn\'t go through. Opening your email app instead so you can send it directly.');
+          openMailFallback(data);
+        }).finally(resetBtn);
+
+        function resetBtn() {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Send message <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

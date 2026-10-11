@@ -1,7 +1,8 @@
 # WebJax Inc. — Website
 
 A single-page, static website for **WebJax Inc.** web design services.
-Everything (HTML, CSS, JavaScript) lives in one file: `index.html`.
+Everything (HTML, CSS, JavaScript, images) lives in one file: `index.html`.
+The Portfolio is a second "page" inside that same file. It opens when someone clicks a Portfolio button, and the browser's back button works.
 
 ## Deploy on Netlify (takes about 2 minutes)
 
@@ -36,7 +37,8 @@ Open `index.html` in any text editor. Things you'll most likely want to change:
 | --- | --- |
 | Prices and package features | the `<section id="pricing">` block |
 | Contact email | search for `webjaxmedia@gmail.com` |
-| Demo sites | the `<section id="demos">` block (copy the first `<article class="demo">` to add another) |
+| Portfolio page | the `<main id="portfolio">` block (the page that opens from the Portfolio buttons). Copy the project block to add another demo. |
+| Portfolio preview image on the home page | the two `<img>` tags in `<section id="work">` |
 | Colors | the `:root { ... }` block at the top of the `<style>` tag |
 | Motto / bio text | the `<section id="about">` block |
 
